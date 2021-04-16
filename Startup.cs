@@ -38,7 +38,11 @@ namespace MvcMovie
                     var dbName = Configuration["DBNAME"] ?? "MvcMovie";
                     var dbUser = Configuration["DBUSER"] ?? "root";
                     var dbPass = Configuration["DBPASS"] ?? "password";
-                    connectionString = $"server={dbHost};port={dbPort};database={dbName};uid={dbUser};password={dbPass}";
+                    var dbSslMode = Configuration["DBSSLMODE"];
+                    
+                    connectionString = $"server={dbHost};port={dbPort};database={dbName};uid={dbUser};password={dbPass};";
+                    if(!string.IsNullOrWhiteSpace(dbSslMode))
+                        connectionString += $"SslMode={dbSslMode};";
                 }
 
                 options.UseMySQL(connectionString);
